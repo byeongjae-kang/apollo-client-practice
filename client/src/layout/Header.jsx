@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import currentUserQuery from "../queries/currentUser";
@@ -18,7 +17,7 @@ const Header = () => {
     if (data?.user) {
       return (
         <li>
-          <a href onClick={logoutHandler}>
+          <a href="/" onClick={logoutHandler}>
             logout
           </a>
         </li>
