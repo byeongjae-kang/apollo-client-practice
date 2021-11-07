@@ -28,7 +28,7 @@ export const AuthContextProvider = ({ children }) => {
       refetchQueries: [{ query: currentUserQuery }]
     })
       .then((res) => {
-        setUserState(res.data.login.email);
+        setUserState(res.data.signup.email);
         navigate("/welcome");
       })
       .catch((error) => {
