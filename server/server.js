@@ -1,5 +1,6 @@
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const models = require("./models");
 const { graphqlHTTP } = require("express-graphql");
 const mongoose = require("mongoose");
@@ -49,6 +50,12 @@ app.use(passport.session());
 
 // Instruct Express to pass on any request made to the '/graphql' route
 // to the GraphQL instance.
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true // <-- REQUIRED backend setting
+};
+
+app.use(cors(corsOptions));
 app.use(
   "/graphql",
   graphqlHTTP({
@@ -58,5 +65,5 @@ app.use(
 );
 
 app.listen(4000, () => {
-  console.log('Listening');
+  console.log("Listening");
 });
