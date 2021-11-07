@@ -1,13 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink
+} from "@apollo/client";
 
 import App from "./App";
 import "./index.css";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  link: createHttpLink({
+    uri: "http://localhost:4000/graphql",
+    credentials: "include"
+  })
 });
 
 ReactDOM.render(
