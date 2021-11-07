@@ -1,40 +1,24 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useQuery, useMutation } from "@apollo/client";
-import currentUserQuery from "../queries/currentUser";
-import logoutMutation from "../mutation/logout";
+import { AuthContext } from "../context/userContext";
 
 const Header = () => {
-  const { data } = useQuery(currentUserQuery);
-  const [logout] = useMutation(logoutMutation);
+  const { userState, logoutHandler } = useContext(AuthContext);
 
-  const logoutHandler = () => {
-    logout({
-      refetchQueries: [{ query: currentUserQuery }]
-    });
-  };
-
-  const renderButtons = () => {
-    if (data?.user) {
-      return (
-        <li>
-          <a href="/" onClick={logoutHandler}>
-            logout
-          </a>
-        </li>
-      );
-    } else {
-      return (
-        <div>
-          <li>
-            <Link to="/signin">Sign In</Link>
-          </li>
-          <li>
-            <Link to="/signup">Sign Up</Link>
-          </li>
-        </div>
-      );
-    }
-  };
+  const buttons = userState ? (
+    <li onClick={logoutHandler}>
+      <Link to="/signin">logout</Link>
+    </li>
+  ) : (
+    <div>
+      <li>
+        <Link to="/signin">Sign In</Link>
+      </li>
+      <li>
+        <Link to="/signup">Sign Up</Link>
+      </li>
+    </div>
+  );
 
   return (
     <nav>
@@ -42,7 +26,7 @@ const Header = () => {
         <Link to="/" className="brand-logo left">
           Home
         </Link>
-        <ul className="right">{renderButtons()}</ul>
+        <ul className="right">{buttons}</ul>
       </div>
     </nav>
   );

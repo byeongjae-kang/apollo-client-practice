@@ -2,12 +2,12 @@ import { useState } from "react";
 
 const INITIAL_STATE = { email: "", password: "" };
 
-const AuthForm = ({ onLogin, onSignup, errors }) => {
+const AuthForm = ({ isLoggingIn, onSubmitForm, errors }) => {
   const [input, setInput] = useState(INITIAL_STATE);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    onLogin ? onLogin(input) : onSignup(input);
+    onSubmitForm(input, isLoggingIn);
     setInput(INITIAL_STATE);
   };
 
@@ -33,7 +33,7 @@ const AuthForm = ({ onLogin, onSignup, errors }) => {
         <button className="btn" type="submit">
           Submit
         </button>
-        {errors.map((err, index) => (
+        {errors?.map((err, index) => (
           <p key={index} className="error">
             {err}
           </p>

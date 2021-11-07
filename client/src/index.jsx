@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink
 } from "@apollo/client";
+import { AuthContextProvider } from "./context/userContext";
 
 import App from "./App";
 import "./index.css";
@@ -20,9 +22,13 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
+    <BrowserRouter>
+      <ApolloProvider client={client}>
+        <AuthContextProvider>
+          <App />
+        </AuthContextProvider>
+      </ApolloProvider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );
